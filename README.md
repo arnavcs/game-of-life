@@ -1,4 +1,4 @@
-# game-of-life
+# The Game of Life
 This is a version of the popular Conway's game of life that is made in javascript.
 
 ## Game mechanics
