@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="Arnav Kumar" />
+        <meta name="description" content="Question 5 of Arrays Assignment" />
+        <meta name="geo.country" content="CA" />
+        <link rel="stylesheet" href="style.css" type="text/css">
+        <script src="script.js"></script>
+	</head>
+    <body>
+        <div class="horizontal">
+            <div class="vertical">
+                <div class="horizontal">
+                    <p>Rows:</p><input type="number" id="rows" value="20">
+                </div>
+                <div class="horizontal">
+                    <p>Columns:</p><input type="number" id="cols" value="20">
+                </div>
+            </div>
+            <button id="makeTable">Make Table</button>
+        </div>
+        <p id="genNumber">Generation 0</p>
+        <div class="vertical" id="tableContainer">
+            <table></table>
+        </div>
+        <div class="horizontal">
+            <div class="vertical">
+                <div class="horizontal">
+                    <p>Generations:</p><input type="number" id="gens" value="50">
+                </div>
+                <div class="horizontal">
+                    <p>Time between generations (milliseconds):</p><input type="number" id="intervalTime" value="500">
+                </div>
+            </div>
+            <button id="startSim">Start</button>
+        </div>
+    </body>
+</html>

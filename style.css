@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.horizontal {
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.vertical {
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    margin-right: 5px;
+}
+
+button {
+    margin: 20px;
+    padding: 5px;
+}
+
+#gens {
+    height: 16px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table * {
+    border: 3px solid grey;
+}
+
+.alive {
+    background-color: black;
+    width: 20px;
+    height: 20px;
+}
+
+.dead {
+    background-color: white;
+    width: 20px;
+    height: 20px;
+}
+
+#genNumber {
+    text-align: center;
+    display: none;
+}
