@@ -1,3 +1,13 @@
+//this function takes in a hex code and returns and object with the rgb
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
 //this function handles what happens when you click a cell in the table
 function handleCellClick(event) {
     this.className = (this.className == "dead") ? "alive" : "dead";
@@ -88,8 +98,6 @@ function generateNextGen(table) {
             if (data.className == "alive") {
                 if (numLiveNeighbors < 2 || numLiveNeighbors > 3) {
                     data.className = "dead";
-                } else {
-                    data.className = "alive";
                 }
             } else {
                 if (numLiveNeighbors == 3) {
@@ -107,12 +115,34 @@ function startGeneration(numGens, table, genNumber, time) {
     //Changes the values in the table
     generateNextGen(table);
 
+    //sets the colours
+    changeColour(document.getElementById("aliveColour"), document.getElementById("deadColour"));
+
     //changes the number of the generation that is displayed
     genNumber.innerHTML = "Generation " + String(Number(genNumber.innerHTML.substr(11, genNumber.innerHTML.length)) + 1);
 
-    //reruns the function with a reduced number of generations left
     if (numGens > 1) {
+        //reruns the function with a reduced number of generations left
         setTimeout(startGeneration, Number(time.value), numGens - 1, table, genNumber, time);
+    }
+}
+
+
+//this function takes in two colour values and changes all alive cells to the correct colour, and all dead cells to the correct colour.
+function changeColour(aliveColour, deadColour) {
+
+    //gets the alive and dead cells
+    let aliveCells = document.getElementsByClassName("alive");
+    let deadCells = document.getElementsByClassName("dead");
+
+    //iterates through all the alive cells and sets their value
+    for (let i = 0; i < aliveCells.length; i++) {
+        aliveCells[i].style.backgroundColor = String(aliveColour.value);
+    }
+
+    //iterates through all the dead cells and sets their value
+    for (let i = 0; i < deadCells.length; i++) {
+        deadCells[i].style.backgroundColor = String(deadColour.value);
     }
 }
 
@@ -131,11 +161,19 @@ window.onload = () => {
     //gets the table container from the DOM
     let tableContainer = document.getElementById("tableContainer");
 
+    //gets the desired colours for the alive and dead states
+    let aliveColour = document.getElementById("aliveColour");
+    let deadColour = document.getElementById("deadColour");
+
+    console.log(deadColour.value)
+
     //gets the numebr of generations the user wants and the start simulation button from the DOM
     let gens = document.getElementById("gens");
     let time = document.getElementById("intervalTime");
     let start = document.getElementById("startSim");
-    
+
+    //constantly checks that the colours are correct
+    let colourUpdater = setInterval(changeColour, 100, aliveColour, deadColour);
 
     //makes the handler of the Make Table button
     let handleMakeTable = (event) => {
@@ -156,19 +194,30 @@ window.onload = () => {
     //makes the handler of the Start button
     let handleStart = (event) => {
 
-        //makes it impossible to manually change the tile values
-        removeCellEventListeners(tableContainer.children[0]);
+        //checks to see if the alive colour and dead colour are different
+        if (aliveColour.value != deadColour.value) {
+            //makes it impossible to manually change the tile values
+            removeCellEventListeners(tableContainer.children[0]);
 
-        //removes the funcitonality of the inputs and the buttons
-        numRows.disabled = "disabled";
-        numCols.disabled = "disabled";
-        gens.disabled = "disabled";
-        update.disabled = "disabled";
-        time.disabled = "disabled";
-        start.disabled = "disabled";
+            //removes the funcitonality of the inputs and the buttons
+            numRows.disabled = "disabled";
+            numCols.disabled = "disabled";
+            gens.disabled = "disabled";
+            update.disabled = "disabled";
+            aliveColour.disabled = "disabled";
+            deadColour.disabled = "disabled";
+            time.disabled = "disabled";
+            start.disabled = "disabled";
 
-        //starts the simulation that generates the generations of the game after 0.5 seconds
-        setTimeout(startGeneration, Number(time.value), Number(gens.value), tableContainer.children[0], genNumber, time);
+            //changes the colours of the cells and stops updating it afterwards
+            changeColour(aliveColour, deadColour);
+            clearInterval(colourUpdater);
+
+            //starts the simulation that generates the generations of the game after 0.5 seconds
+            setTimeout(startGeneration, Number(time.value), Number(gens.value), tableContainer.children[0], genNumber, time);
+        } else {
+            alert("Please choose different Alive and Dead colours.");
+        }
     }
 
     //runs the handler if the button is clicked
