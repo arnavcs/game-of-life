@@ -1,5 +1,5 @@
 # The Game of Life
-This is a version of the popular Conway's game of life that is made in javascript. Check it out!](https://arnavcs.github.io/game-of-life/)
+This is a version of the popular Conway's game of life that is made in javascript. [Check it out!](https://arnavcs.github.io/game-of-life/)
 
 ## Game mechanics
 The game works as follows. There are a number of generations, and each generation, a cell is alive if it was previously alive and had 2 or 3 neighbors, or if if was previously dead and had exactly 3 neighbors. Otherwise, it is dead.
